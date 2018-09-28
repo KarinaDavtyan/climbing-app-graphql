@@ -95,9 +95,9 @@
 
 const { idToString } = __webpack_require__(/*! ../helpers */ "./src/helpers/index.js");
 const { MongoClient } = __webpack_require__(/*! mongodb */ "mongodb");
-const url = 'mongodb://localhost:27017/climbing-app';
-const dbName = 'climbing-app';
 
+const url = process.env.MONGO_LOCAL_DB;
+const dbName = process.env.DB_NAME;
 
 const postRoute = async ({ data }) => {
   let client;
@@ -126,9 +126,7 @@ const getRoutes = async () => {
     const db = client.db(dbName);
     const routes = db.collection('routes');
 
-
-
-    let routesArray = await routes.find().limit(10).toArray();
+    const routesArray = await routes.find().limit(10).toArray();
     const routesWithStrID = routesArray.map(idToString);
     return routesWithStrID;
   } catch (err) {
@@ -238,6 +236,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _graphQL_types_index_graphql__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./graphQL/types/index.graphql */ "./src/graphQL/types/index.graphql");
 /* harmony import */ var _graphQL_types_index_graphql__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_graphQL_types_index_graphql__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _graphQL_resolvers_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./graphQL/resolvers/index.js */ "./src/graphQL/resolvers/index.js");
+__webpack_require__(/*! dotenv */ "dotenv").config()
+
 
 
 
@@ -247,10 +247,11 @@ __webpack_require__.r(__webpack_exports__);
 
 const app = new koa__WEBPACK_IMPORTED_MODULE_0___default.a();
 const server = new apollo_server_koa__WEBPACK_IMPORTED_MODULE_1__["ApolloServer"]({ typeDefs: (_graphQL_types_index_graphql__WEBPACK_IMPORTED_MODULE_3___default()), resolvers: _graphQL_resolvers_index_js__WEBPACK_IMPORTED_MODULE_4__["default"] });
+const port = 4000;
 
 server.applyMiddleware({ app });
 
-app.listen({ port: 4000 }, () =>
+app.listen({ port }, () =>
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`),
 );
 
@@ -265,6 +266,17 @@ app.listen({ port: 4000 }, () =>
 /***/ (function(module, exports) {
 
 module.exports = require("apollo-server-koa");
+
+/***/ }),
+
+/***/ "dotenv":
+/*!*************************!*\
+  !*** external "dotenv" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("dotenv");
 
 /***/ }),
 

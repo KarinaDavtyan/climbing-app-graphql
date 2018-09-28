@@ -1,8 +1,8 @@
 const { idToString } = require('../helpers');
 const { MongoClient } = require('mongodb');
-const url = 'mongodb://localhost:27017/climbing-app';
-const dbName = 'climbing-app';
 
+const url = process.env.MONGO_LOCAL_DB;
+const dbName = process.env.DB_NAME;
 
 const postRoute = async ({ data }) => {
   let client;
@@ -31,9 +31,7 @@ const getRoutes = async () => {
     const db = client.db(dbName);
     const routes = db.collection('routes');
 
-
-
-    let routesArray = await routes.find().limit(10).toArray();
+    const routesArray = await routes.find().limit(10).toArray();
     const routesWithStrID = routesArray.map(idToString);
     return routesWithStrID;
   } catch (err) {
