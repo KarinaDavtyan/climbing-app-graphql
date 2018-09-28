@@ -3,7 +3,7 @@ import { ApolloServer } from 'apollo-server-koa';
 import { importSchema } from 'graphql-import'
 
 import typeDefs from './graphQL/types/index.graphql';
-import resolvers from './graphQL/resolvers.js';
+import resolvers from './graphQL/resolvers/index.js';
 
 const app = new Koa();
 const server = new ApolloServer({ typeDefs, resolvers });

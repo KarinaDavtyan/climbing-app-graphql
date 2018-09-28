@@ -148,16 +148,16 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./src/graphQL/resolvers.js":
-/*!**********************************!*\
-  !*** ./src/graphQL/resolvers.js ***!
-  \**********************************/
+/***/ "./src/graphQL/resolvers/index.js":
+/*!****************************************!*\
+  !*** ./src/graphQL/resolvers/index.js ***!
+  \****************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../db */ "./src/db/index.js");
+/* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../db */ "./src/db/index.js");
 /* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_db__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -237,7 +237,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var graphql_import__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(graphql_import__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _graphQL_types_index_graphql__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./graphQL/types/index.graphql */ "./src/graphQL/types/index.graphql");
 /* harmony import */ var _graphQL_types_index_graphql__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_graphQL_types_index_graphql__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _graphQL_resolvers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./graphQL/resolvers.js */ "./src/graphQL/resolvers.js");
+/* harmony import */ var _graphQL_resolvers_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./graphQL/resolvers/index.js */ "./src/graphQL/resolvers/index.js");
 
 
 
@@ -246,7 +246,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const app = new koa__WEBPACK_IMPORTED_MODULE_0___default.a();
-const server = new apollo_server_koa__WEBPACK_IMPORTED_MODULE_1__["ApolloServer"]({ typeDefs: (_graphQL_types_index_graphql__WEBPACK_IMPORTED_MODULE_3___default()), resolvers: _graphQL_resolvers_js__WEBPACK_IMPORTED_MODULE_4__["default"] });
+const server = new apollo_server_koa__WEBPACK_IMPORTED_MODULE_1__["ApolloServer"]({ typeDefs: (_graphQL_types_index_graphql__WEBPACK_IMPORTED_MODULE_3___default()), resolvers: _graphQL_resolvers_index_js__WEBPACK_IMPORTED_MODULE_4__["default"] });
 
 server.applyMiddleware({ app });
 
