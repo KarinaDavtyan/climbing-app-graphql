@@ -86,6 +86,68 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/db/index.js":
+/*!*************************!*\
+  !*** ./src/db/index.js ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const { idToString } = __webpack_require__(/*! ../helpers */ "./src/helpers/index.js");
+const { MongoClient } = __webpack_require__(/*! mongodb */ "mongodb");
+const url = 'mongodb://localhost:27017/climbing-app';
+const dbName = 'climbing-app';
+
+
+const postRoute = async ({ data }) => {
+  let client;
+  try {
+    client = await MongoClient.connect(url);
+    const db = client.db(dbName);
+    const routes = db.collection('routes');
+
+    const { _id, title, location } = data;
+
+    const route = routes.insert({
+      title
+    })
+    return route;
+  } catch (err) {
+    //eslint-disable-next-line
+    console.log(err.stack);
+  }
+  client.close();
+}
+
+const getRoutes = async () => {
+  let client;
+  try {
+    client = await MongoClient.connect(url);
+    const db = client.db(dbName);
+    const routes = db.collection('routes');
+
+
+
+    let routesArray = await routes.find().limit(10).toArray();
+    const routesWithStrID = routesArray.map(idToString);
+    return routesWithStrID;
+  } catch (err) {
+    //eslint-disable-next-line
+    console.log(err.stack);
+  }
+  client.close();
+}
+
+
+
+module.exports = {
+  postRoute,
+  getRoutes
+}
+
+
+/***/ }),
+
 /***/ "./src/graphQL/resolvers.js":
 /*!**********************************!*\
   !*** ./src/graphQL/resolvers.js ***!
@@ -95,32 +157,31 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../db */ "./src/db/index.js");
+/* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_db__WEBPACK_IMPORTED_MODULE_0__);
+
+
 const resolvers = {
   Query: {
     route:()=> {
       return {
-        title: 'title',
-        location: {
-          lat: 1,
-          lon: 2
-        }
+        title: 'title'
       }
     },
-    routes: () => {
-      return [{
-        title: 'title',
-        location: {
-          lat: 1,
-          lon: 2
-        }
-      },{
-        title: 'title2',
-        location: {
-          lat: 1,
-          lon: 2
-        }
+    routes: async () => {
+      const routes = await _db__WEBPACK_IMPORTED_MODULE_0___default.a.getRoutes();
+      return routes
+    }
+  },
+  Mutation: {
+    postRoute: async (root, args) => {
+      const data = {
+        title: args.title
       }
-    ]
+      await _db__WEBPACK_IMPORTED_MODULE_0___default.a.postRoute({ data })
+      return {
+        data
+      }
     }
   }
 }
@@ -137,7 +198,25 @@ const resolvers = {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "type Query {\n  route: Route\n  routes: [Route]\n}\n\ntype Route {\n  id: ID\n  title: String\n  location: Location\n}\n\ntype Location {\n  lat: Int\n  lon: Int\n}\n"
+module.exports = "type Query {\n  route: Route\n  routes: [Route]\n}\n\ntype Mutation {\n  postRoute(title: String!): Route\n}\n\ntype Route {\n  _id: ID\n  title: String\n}\n"
+
+/***/ }),
+
+/***/ "./src/helpers/index.js":
+/*!******************************!*\
+  !*** ./src/helpers/index.js ***!
+  \******************************/
+/*! exports provided: idToString */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "idToString", function() { return idToString; });
+const idToString = (doc) => {
+  doc._id = doc._id.toString()
+  return doc;
+}
+
 
 /***/ }),
 
@@ -208,6 +287,17 @@ module.exports = require("graphql-import");
 /***/ (function(module, exports) {
 
 module.exports = require("koa");
+
+/***/ }),
+
+/***/ "mongodb":
+/*!**************************!*\
+  !*** external "mongodb" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("mongodb");
 
 /***/ })
 

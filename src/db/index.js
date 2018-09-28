@@ -1,19 +1,41 @@
+const { idToString } = require('../helpers');
 const { MongoClient } = require('mongodb');
-const url = 'mongodb://localhost:27017/climbing_app_native';
+const url = 'mongodb://localhost:27017/climbing-app';
+const dbName = 'climbing-app';
 
 
-const getCollections = async (telegramId) => {
+const postRoute = async ({ data }) => {
   let client;
   try {
     client = await MongoClient.connect(url);
     const db = client.db(dbName);
-    const users = db.collection('users');
-    const selections = db.collection('selections');
+    const routes = db.collection('routes');
+
+    const { _id, title, location } = data;
+
+    const route = routes.insert({
+      title
+    })
+    return route;
+  } catch (err) {
+    //eslint-disable-next-line
+    console.log(err.stack);
+  }
+  client.close();
+}
+
+const getRoutes = async () => {
+  let client;
+  try {
+    client = await MongoClient.connect(url);
+    const db = client.db(dbName);
+    const routes = db.collection('routes');
 
 
-    let { _id } = await users.findOne({ telegramId });
-    let selectionArray = await selections.find({ owner: _id }).limit(8).toArray();
-    return selectionArray;
+
+    let routesArray = await routes.find().limit(10).toArray();
+    const routesWithStrID = routesArray.map(idToString);
+    return routesWithStrID;
   } catch (err) {
     //eslint-disable-next-line
     console.log(err.stack);
@@ -22,6 +44,8 @@ const getCollections = async (telegramId) => {
 }
 
 
+
 module.exports = {
-  getCollections
+  postRoute,
+  getRoutes
 }

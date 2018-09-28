@@ -3,18 +3,11 @@ type Query {
   routes: [Route]
 }
 
-type Route {
-  id: ID,
-  title: String,
-  location: Location
+type Mutation {
+  postRoute(title: String!) : Route
 }
 
-type Location {
-  lat: Int,
-  lon: Int
-  # country: String,
-  # city: String,
-  # climbing_area: String,
-  # sector: String,
-  # subsector: String
+type Route {
+  _id: ID,
+  title: String
 }

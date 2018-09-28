@@ -1,29 +1,26 @@
+import db from '../db';
+
 const resolvers = {
   Query: {
     route:()=> {
       return {
-        title: 'title',
-        location: {
-          lat: 1,
-          lon: 2
-        }
+        title: 'title'
       }
     },
-    routes: () => {
-      return [{
-        title: 'title',
-        location: {
-          lat: 1,
-          lon: 2
-        }
-      },{
-        title: 'title2',
-        location: {
-          lat: 1,
-          lon: 2
-        }
+    routes: async () => {
+      const routes = await db.getRoutes();
+      return routes
+    }
+  },
+  Mutation: {
+    postRoute: async (root, args) => {
+      const data = {
+        title: args.title
       }
-    ]
+      await db.postRoute({ data })
+      return {
+        data
+      }
     }
   }
 }
