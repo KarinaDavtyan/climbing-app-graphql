@@ -1,0 +1,20 @@
+type Query {
+  route: Route,
+  routes: [Route]
+}
+
+type Route {
+  id: ID,
+  title: String,
+  location: Location
+}
+
+type Location {
+  lat: Int,
+  lon: Int
+  # country: String,
+  # city: String,
+  # climbing_area: String,
+  # sector: String,
+  # subsector: String
+}
