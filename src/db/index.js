@@ -1,3 +1,4 @@
+ require('dotenv').config()
 const { idToString } = require('../helpers');
 const { MongoClient } = require('mongodb');
 
@@ -7,7 +8,7 @@ const dbName = process.env.DB_NAME;
 const postRoute = async ({ data }) => {
   let client;
   try {
-    client = await MongoClient.connect(url);
+    client = await MongoClient.connect(url, { useNewUrlParser: true });
     const db = client.db(dbName);
     const routes = db.collection('routes');
 
@@ -27,7 +28,7 @@ const postRoute = async ({ data }) => {
 const getRoutes = async () => {
   let client;
   try {
-    client = await MongoClient.connect(url);
+    client = await MongoClient.connect(url, { useNewUrlParser: true });
     const db = client.db(dbName);
     const routes = db.collection('routes');
 

@@ -93,6 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+ __webpack_require__(/*! dotenv */ "dotenv").config()
 const { idToString } = __webpack_require__(/*! ../helpers */ "./src/helpers/index.js");
 const { MongoClient } = __webpack_require__(/*! mongodb */ "mongodb");
 
@@ -102,7 +103,7 @@ const dbName = process.env.DB_NAME;
 const postRoute = async ({ data }) => {
   let client;
   try {
-    client = await MongoClient.connect(url);
+    client = await MongoClient.connect(url, { useNewUrlParser: true });
     const db = client.db(dbName);
     const routes = db.collection('routes');
 
@@ -122,7 +123,7 @@ const postRoute = async ({ data }) => {
 const getRoutes = async () => {
   let client;
   try {
-    client = await MongoClient.connect(url);
+    client = await MongoClient.connect(url, { useNewUrlParser: true });
     const db = client.db(dbName);
     const routes = db.collection('routes');
 
