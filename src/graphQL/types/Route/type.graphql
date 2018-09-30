@@ -1,0 +1,17 @@
+type Route {
+  id: String!,
+  name: String!,
+  difficulty: String!,
+  length_m: Int,
+  tags: [String],
+  style: Style,
+  img_url: [String]
+}
+
+enum Style {
+  SPORT,
+  TRAD,
+  BOULDER,
+  PSICOBLOC,
+  MULTIPITCH
+}

@@ -1,13 +1,26 @@
+# import ClimbingArea from "src/graphQL/types/ClimbingArea/type.graphql"
+# import Route from "src/graphQL/types/Route/type.graphql"
+# import User from "src/graphQL/types/User/type.graphql"
+# import * from "src/graphQL/types/Post/type.graphql"
+
+schema {
+  query: Query
+}
 type Query {
-  route: Route,
-  routes: [Route]
+  route: Route1, #id
+  routes: [Route1], #user, #climbing area, limit 25
+  climbing_area: ClimbingArea, #country #distance_from_user*,
+  new: Route,
+  sport_post: SportPost,
+  leisure_post: LeisurePost,
+  user: User, #id,
 }
 
 type Mutation {
   postRoute(title: String!) : Route
 }
 
-type Route {
+type Route1 {
   _id: ID,
   title: String
 }

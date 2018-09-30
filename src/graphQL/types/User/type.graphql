@@ -1,0 +1,13 @@
+# import Route from "../Route/type.graphql"
+# import * from "../Post/type.graphql"
+
+type User {
+  id: String!,
+  username: String!,
+  name: String,
+  surname: String,
+  leisure_posts: [LeisurePost],
+  sport_post: [SportPost],
+  completed_routes: [Route],
+  likes: [LeisurePost]
+}

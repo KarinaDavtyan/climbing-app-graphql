@@ -1,0 +1,8 @@
+type ClimbingArea {
+  _id: String!,
+  name: String!,
+  country: String!,
+  lat: Int!,
+  lon: Int!,
+  img_url: String
+}
