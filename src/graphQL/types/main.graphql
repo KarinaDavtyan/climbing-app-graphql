@@ -9,7 +9,7 @@ schema {
 type Query {
   user: User #id username
   route(_id: ID!): Route
-  climbing_area: ClimbingArea #country #distance_from_user*
+  climbing_area(_id: ID, name: String): ClimbingArea #country #distance_from_user*
   posts: [Post]
   sport_post: SportPost
   leisure_post: LeisurePost
@@ -18,4 +18,6 @@ type Query {
 type Mutation {
   createRoute(route: PostRoute): CreateRouteMutationResponse
   deleteRoute(_id: ID!): DeleteRouteMutationResponse
+  createClimbingArea(climbing_area: PostClimbingArea): CreateClimbingAreaMutationResponse
+  deleteClimbingArea(_id: ID!): DeleteClimbingAreaMutationResponse
 }

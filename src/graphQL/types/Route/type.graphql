@@ -1,11 +1,15 @@
+# import * from "../ClimbingArea/type.graphql"
+
 type Route {
   _id: ID!
+  climbing_area_name: String!
   name: String!
   difficulty: String!
   length_m: Int
   tags: [String]
   style: Style
   img_url: [String]
+  climbing_area: ClimbingArea
 }
 
 enum Style {
@@ -16,9 +20,12 @@ enum Style {
   MULTIPITCH
 }
 
+#FIX: - ClimbingArea validation on front
 input PostRoute {
   "Given name by the routesetter"
   name: String
+  "Associated climbing area"
+  climbing_area_name: String
   "Route difficulty expressed in the French system, e.g. 7a/7A"
   difficulty: String
   "Length in metres"
