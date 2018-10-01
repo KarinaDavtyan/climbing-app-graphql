@@ -6,12 +6,41 @@ const resolvers = {
       const route = await db.getRoute({_id: args._id});
       return route
     },
-    climbing_area: async (root, args)=> {
-      const climbing_area = await db.getClimbingArea({_id: args._id});
-      return climbing_area
-    }
+
+    //FIX: populate with routes
+    // climbing_area: async (root, args)=> {
+    //   const climbing_area = await db.getClimbingArea({_id: args._id});
+    //   return climbing_area
+    // }
   },
   Mutation: {
+    createUser: async (root, args) => {
+      try {
+        const data = {
+          username: args.user.username,
+          email: args.user.email,
+        }
+        const user = await db.createUser({ data });
+        if (user) {
+          const response = {
+            success: true,
+            message: `User ${user._id} successfully added`
+          }
+          const result = Object.assign(
+            { user }, response
+          )
+          return result;
+        } else {
+          const response = {
+            success: false,
+            message: `User ${data.username} NOT added`
+          }
+          return response;
+        }
+      } catch (e) {
+        console.log(e, "ERROR createRoute");
+      }
+    },
     createRoute: async (root, args) => {
       try {
         const data = {
@@ -114,8 +143,65 @@ const resolvers = {
       } catch (e) {
         console.log(e, "ERROR on deleteClimbingArea");
       }
-    }
+    },
+    createLeisurePost: async (root, args) => {
+      try {
+        const data = {
+          user_id: args.post.user_id,
+          img_url: args.post.img_url,
+        }
+        const post = await db.createLeisurePost({ data });
+        if (post) {
+          const response = {
+            success: true,
+            message: `Post ${post._id} successfully added`
+          }
+          const result = Object.assign(
+            { post }, response
+          )
+          return result;
+        } else {
+          const response = {
+            success: false,
+            message: `Post NOT added`
+          }
+          return response;
+        }
+      } catch (e) {
+        console.log(e, "ERROR createLeisurePost");
+      }
+    },
+    createSportPost: async (root, args) => {
+      try {
+        const data = {
+          user_id: args.post.user_id,
+          img_url: args.post.img_url,
+          route_id: args.post.route_id
+        }
+        const post = await db.createSportPost({ data });
+        if (post) {
+          const response = {
+            success: true,
+            message: `Sport post ${post._id} successfully added`
+          }
+          const result = Object.assign(
+            { post }, response
+          )
+          return result;
+        } else {
+          const response = {
+            success: false,
+            message: `Sport post NOT added`
+          }
+          return response;
+        }
+      } catch (e) {
+        console.log(e, "ERROR createClimbingArea");
+      }
+    },
   }
 }
+
+
 
 export default resolvers;

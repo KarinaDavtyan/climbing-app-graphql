@@ -5,6 +5,40 @@ const { MongoClient, ObjectId } = require('mongodb');
 const url = process.env.MONGO_LOCAL_DB;
 const dbName = process.env.DB_NAME;
 
+
+const createUser = async ({ data }) => {
+  let client;
+  try {
+
+    client = await MongoClient.connect(url, { useNewUrlParser: true });
+    const db = client.db(dbName);
+    const users = db.collection('users');
+
+    const { username, email } = data;
+
+    const user = await users.insertOne({
+      username,
+      email,
+      leisure_posts: [],
+      sport_posts: []
+    })
+
+    if (user.insertedId) {
+
+        //FIX -  add spread operator
+        const res = Object.assign({_id: user.insertedId.toString()}, data)
+        return res;
+
+    } else {
+      return;
+    }
+  } catch (err) {
+    //eslint-disable-next-line
+    console.log(err.stack);
+  }
+  client.close();
+}
+
 const createRoute = async ({ data }) => {
   let client;
   try {
@@ -190,10 +224,90 @@ const deleteClimbingArea = async (_id) => {
 }
 
 
+const createLeisurePost = async ({ data }) => {
+  let client;
+  try {
+
+    client = await MongoClient.connect(url, { useNewUrlParser: true });
+    const db = client.db(dbName);
+    const leisure_posts = db.collection('leisure_posts');
+    const users = db.collection('users');
+
+    const { user_id, img_url } = data;
+
+    const leisure_post = await leisure_posts.insertOne({
+      user_id: new ObjectId(user_id),
+      img_url
+    })
+
+    if (leisure_post.insertedId) {
+      const targetUser =  await users.updateOne(
+        { _id: new ObjectId(user_id) },
+        { $push: { leisure_posts: leisure_post.insertedId} }
+      )
+      if (targetUser.modifiedCount > 0) {
+        //FIX -  add spread operator
+        const res = Object.assign({_id: leisure_post.insertedId.toString()}, data)
+        return res;
+      } else {
+        console.log('leisurePost wasnt appended to user creator');
+      }
+    } else {
+      return;
+    }
+  } catch (err) {
+    //eslint-disable-next-line
+    console.log(err.stack);
+  }
+  client.close();
+}
+
+const createSportPost = async ({ data }) => {
+  let client;
+  try {
+
+    client = await MongoClient.connect(url, { useNewUrlParser: true });
+    const db = client.db(dbName);
+    const sport_posts = db.collection('sport_posts');
+    const users = db.collection('users');
+
+    const { user_id, img_url, route_id } = data;
+
+    const sport_post = await sport_posts.insertOne({
+      user_id: new ObjectId(user_id),
+      img_url,
+      route_id:  new ObjectId(route_id)
+    })
+
+    if (sport_post.insertedId) {
+      const targetUser =  await users.updateOne(
+        { _id: new ObjectId(user_id) },
+        { $push: { sport_posts: sport_post.insertedId} }
+      )
+      if (targetUser.modifiedCount > 0) {
+        //FIX -  add spread operator
+        const res = Object.assign({_id: sport_post.insertedId.toString()}, data)
+        return res;
+      } else {
+        console.log('sportPost wasnt appended to user creator');
+      }
+    } else {
+      return;
+    }
+  } catch (err) {
+    //eslint-disable-next-line
+    console.log(err.stack);
+  }
+  client.close();
+}
+
 module.exports = {
+  createUser,
   getRoute,
   createRoute,
   deleteRoute,
   createClimbingArea,
   getClimbingArea,
+  createLeisurePost,
+  createSportPost,
 }

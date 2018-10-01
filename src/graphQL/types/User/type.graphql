@@ -2,12 +2,36 @@
 # import * from "../Post/type.graphql"
 
 type User {
-  _id: ID!,
-  username: String!,
-  name: String,
-  surname: String,
-  leisure_posts: [LeisurePost],
-  sport_post: [SportPost],
-  completed_routes: [Route],
+  _id: ID!
+  username: String!
+  email: String!
+  img_url: String
+  name: String
+  surname: String
+  leisure_posts: [LeisurePost]
+  sport_posts: [SportPost]
+  completed_routes: [Route]
   likes: [LeisurePost]
+}
+
+input PostUser {
+  username: String!
+  email: String!
+}
+
+interface MutationResponse {
+  success: Boolean!
+  message: String!
+}
+
+type DeleteUserMutationResponse {
+  success: Boolean!
+  message: String!
+  deleteUserID: ID
+}
+
+type CreateUserMutationResponse {
+  success: Boolean!
+  message: String!
+  user: User
 }

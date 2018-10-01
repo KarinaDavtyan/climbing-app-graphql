@@ -3,17 +3,68 @@
 
 interface Post {
   _id: ID!
-  user: User!
+  user_id: ID!
+  img_url: String!
+  user: User
+  tags: [String]
 }
 
 type SportPost implements Post {
   _id: ID!
-  user: User!
-  route: Route!
-
+  user_id: ID!
+  img_url: String!
+  route_id: ID!
+  route: Route
+  user: User
+  attempts: Int
+  tags: [String]
 }
 
 type LeisurePost implements Post {
   _id: ID!
-  user: User!
+  user_id: ID!
+  img_url: String!
+  user: User
+  likes: Int
+  tags: [String]
+}
+
+input SubmitLeisurePost {
+  "User who sublited the post"
+  user_id: ID!
+  "Image url"
+  img_url: String!
+  tags: [String]
+}
+
+input SubmitSportPost {
+  "User who sublited the post"
+  user_id: ID!
+  "Image url"
+  img_url: String!
+  route_id: ID!
+  tags: [String]
+}
+
+interface MutationResponse {
+  success: Boolean!
+  message: String!
+}
+
+type DeletePostMutationResponse {
+  success: Boolean!
+  message: String!
+  deletePostID: ID
+}
+
+type CreateLeisurePostMutationResponse {
+  success: Boolean!
+  message: String!
+  post: LeisurePost
+}
+
+type CreateSportPostMutationResponse {
+  success: Boolean!
+  message: String!
+  post: SportPost
 }
