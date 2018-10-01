@@ -1,17 +1,47 @@
 type Route {
-  id: String!,
-  name: String!,
-  difficulty: String!,
-  length_m: Int,
-  tags: [String],
-  style: Style,
+  _id: ID!
+  name: String!
+  difficulty: String!
+  length_m: Int
+  tags: [String]
+  style: Style
   img_url: [String]
 }
 
 enum Style {
-  SPORT,
-  TRAD,
-  BOULDER,
-  PSICOBLOC,
+  SPORT
+  TRAD
+  BOULDER
+  PSICOBLOC
   MULTIPITCH
+}
+
+input PostRoute {
+  "Given name by the routesetter"
+  name: String
+  "Route difficulty expressed in the French system, e.g. 7a/7A"
+  difficulty: String
+  "Length in metres"
+  length_m: Int
+  "Tags related to the route climbing experience or look of the line, e.g. tiny_holds"
+  tags: [String]
+  "Route style"
+  style: Style
+}
+
+interface MutationResponse {
+  success: Boolean!
+  message: String!
+}
+
+type DeleteRouteMutationResponse {
+  success: Boolean!
+  message: String!
+  deleteRouteID: ID
+}
+
+type CreateRouteMutationResponse {
+  success: Boolean!
+  message: String!
+  route: Route
 }

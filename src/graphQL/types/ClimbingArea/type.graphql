@@ -1,8 +1,17 @@
 type ClimbingArea {
-  _id: String!,
-  name: String!,
-  country: String!,
-  lat: Int!,
-  lon: Int!,
+  _id: ID!
+  name: String!
+  country: String!
+  # lat: Int!,
+  # lon: Int!,
   img_url: String
+  routes: [Route]
+}
+
+input PostClimbingArea {
+  "Climbing area name"
+  name: String
+  country: String
+  # lat: Int
+  # lon: Int
 }

@@ -2,7 +2,7 @@
 # import * from "../Post/type.graphql"
 
 type User {
-  id: String!,
+  _id: ID!,
   username: String!,
   name: String,
   surname: String,

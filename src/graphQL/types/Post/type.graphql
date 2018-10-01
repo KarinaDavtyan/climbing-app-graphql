@@ -1,15 +1,19 @@
 # import Route from "../Route/type.graphql"
 # import User from "../User/type.graphql"
 
-
-type SportPost {
-  id: String!,
-  route: Route!,
+interface Post {
+  _id: ID!
   user: User!
+}
+
+type SportPost implements Post {
+  _id: ID!
+  user: User!
+  route: Route!
 
 }
 
-type LeisurePost {
-  id: String!,
+type LeisurePost implements Post {
+  _id: ID!
   user: User!
 }
