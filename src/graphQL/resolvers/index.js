@@ -6,6 +6,10 @@ const resolvers = {
       const route = await db.getRoute({_id: args._id});
       return route
     },
+    user: async (root, args)=> {
+      const user = await db.getUser({_id: args._id});
+      return user
+    },
 
     //FIX: populate with routes
     // climbing_area: async (root, args)=> {
