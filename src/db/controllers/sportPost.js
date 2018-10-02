@@ -44,6 +44,31 @@ const createSportPost = async ({ data }) => {
  client.close();
 }
 
+const getSportPost = async (data) => {
+ let client;
+ try {
+   client = await MongoClient.connect(url, { useNewUrlParser: true });
+   const db = client.db(dbName);
+   const sport_posts = db.collection('sport_posts');
+
+   const sport_post = await sport_posts.findOne({
+     _id: new ObjectId(data._id)
+   })
+   if (sport_post) {
+     sport_post._id = sport_post._id.toString();
+     return sport_post
+   } else {
+     return;
+   }
+ } catch (err) {
+   //eslint-disable-next-line
+   console.log(err.stack);
+ }
+ client.close();
+}
+
+
 module.exports = {
   createSportPost,
+  getSportPost
 };

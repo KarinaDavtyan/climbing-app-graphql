@@ -43,6 +43,30 @@ const createLeisurePost = async ({ data }) => {
  client.close();
 }
 
+const getLeisurePost = async (data) => {
+ let client;
+ try {
+   client = await MongoClient.connect(url, { useNewUrlParser: true });
+   const db = client.db(dbName);
+   const leisure_posts = db.collection('leisure_posts');
+
+   const leisure_post = await leisure_posts.findOne({
+     _id: new ObjectId(data._id)
+   })
+   if (leisure_post) {
+     leisure_post._id = leisure_post._id.toString();
+     return leisure_post
+   } else {
+     return;
+   }
+ } catch (err) {
+   //eslint-disable-next-line
+   console.log(err.stack);
+ }
+ client.close();
+}
+
 module.exports = {
   createLeisurePost,
+  getLeisurePost
 };

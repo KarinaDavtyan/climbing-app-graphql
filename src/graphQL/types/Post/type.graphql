@@ -1,15 +1,15 @@
 # import Route from "../Route/type.graphql"
 # import User from "../User/type.graphql"
 
-interface Post {
-  _id: ID!
-  user_id: ID!
-  img_url: String!
-  user: User
-  tags: [String]
-}
+# interface Post {
+#   _id: ID!
+#   user_id: ID!
+#   img_url: String!
+#   user: User
+#   tags: [String]
+# }
 
-type SportPost implements Post {
+type SportPost  {
   _id: ID!
   user_id: ID!
   img_url: String!
@@ -20,7 +20,7 @@ type SportPost implements Post {
   tags: [String]
 }
 
-type LeisurePost implements Post {
+type LeisurePost {
   _id: ID!
   user_id: ID!
   img_url: String!

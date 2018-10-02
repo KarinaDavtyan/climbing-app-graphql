@@ -2,7 +2,7 @@ import merge from 'lodash.merge';
 import db from '../../db';
 import ClimbingArea from '../types/climbingArea/resolvers.js';
 
-
+//FIX: Dont repeat code!!!
 const resolvers = {
   Query: {
     route: async (root, args)=> {
@@ -16,6 +16,14 @@ const resolvers = {
     climbing_area: async (root, args)=> {
       const climbing_area = await db.getClimbingArea({_id: args._id});
       return climbing_area
+    },
+    leisure_post: async (root, args)=> {
+      const leisure_post = await db.getLeisurePost({_id: args._id});
+      return leisure_post
+    },
+    sport_post: async (root, args)=> {
+      const sport_post = await db.getSportPost({_id: args._id});
+      return sport_post
     }
   },
   Mutation: {

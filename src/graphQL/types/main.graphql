@@ -10,9 +10,10 @@ type Query {
   user(_id: ID!): User #id username
   route(_id: ID!): Route
   climbing_area(_id: ID, name: String): ClimbingArea #country #distance_from_user*
-  posts: [Post]
-  sport_post: SportPost
-  leisure_post: LeisurePost
+  sport_posts(_id: ID, user_id: ID, route_id: ID): [SportPost]
+  leisure_posts(_id: ID, user_id: ID): [LeisurePost]
+  sport_post(_id: ID!): SportPost
+  leisure_post(_id: ID!): LeisurePost
 }
 
 type Mutation {
