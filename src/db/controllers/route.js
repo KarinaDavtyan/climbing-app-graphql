@@ -112,8 +112,26 @@ const getRoutes = async () => {
  client.close();
 }
 
+const getRoutesByClimbingAreaName = async (data) => {
+ let client;
+ try {
+   client = await MongoClient.connect(url, { useNewUrlParser: true });
+   const db = client.db(dbName);
+   const routes = db.collection('routes');
+   const { climbing_area_name } = data;
+   const routesArray = await routes.find({ climbing_area_name }).limit(10).toArray();
+   const routesWithStrID = routesArray.map(idToString);
+   return routesWithStrID;
+ } catch (err) {
+   //eslint-disable-next-line
+   console.log(err.stack);
+ }
+ client.close();
+}
+
 module.exports = {
   createRoute,
   getRoute,
-  getRoutes
+  getRoutes,
+  getRoutesByClimbingAreaName,
 }

@@ -1,4 +1,7 @@
+import merge from 'lodash.merge';
 import db from '../../db';
+import ClimbingArea from '../types/climbingArea/resolvers.js';
+
 
 const resolvers = {
   Query: {
@@ -10,12 +13,10 @@ const resolvers = {
       const user = await db.getUser({_id: args._id});
       return user
     },
-
-    //FIX: populate with routes
-    // climbing_area: async (root, args)=> {
-    //   const climbing_area = await db.getClimbingArea({_id: args._id});
-    //   return climbing_area
-    // }
+    climbing_area: async (root, args)=> {
+      const climbing_area = await db.getClimbingArea({_id: args._id});
+      return climbing_area
+    }
   },
   Mutation: {
     createUser: async (root, args) => {
@@ -206,6 +207,5 @@ const resolvers = {
   }
 }
 
-
-
-export default resolvers;
+export default merge(
+  resolvers, ClimbingArea);
