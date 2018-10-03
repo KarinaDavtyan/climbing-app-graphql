@@ -4,6 +4,7 @@ type SportPost  {
   img_url: String!
   climbing_area_name: String!
   route_name: String!
+  username: String!
   attempts: Int
   route: Route
   route_id: ID
@@ -15,6 +16,7 @@ type LeisurePost {
   _id: ID!
   user_id: ID!
   img_url: String!
+  username: String!
   user: User
   likes: Int
   tags: [String]
@@ -22,7 +24,8 @@ type LeisurePost {
 
 input SubmitLeisurePost {
   "User who sublited the post"
-  user_id: ID!
+  username: String!
+  user_id: ID
   "Image url"
   img_url: String!
   tags: [String]
@@ -30,7 +33,8 @@ input SubmitLeisurePost {
 
 input SubmitSportPost {
   "User who sublited the post"
-  user_id: ID!
+  username: String!
+  user_id: ID
   "Image url"
   img_url: String!
   climbing_area_name: String!

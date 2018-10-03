@@ -5,29 +5,33 @@ import ClimbingArea from '../types/climbingArea/resolvers.js';
 //FIX: Dont repeat code!!!
 const resolvers = {
   Query: {
-    route: async (root, args)=> {
+    route: async (_, args)=> {
       const route = await db.getRoute({_id: args._id});
       return route
     },
-    user: async (root, args)=> {
+    user: async (_, args)=> {
       const user = await db.getUser({_id: args._id});
       return user
     },
-    climbing_area: async (root, args)=> {
+    climbing_area: async (_, args)=> {
       const climbing_area = await db.getClimbingArea({_id: args._id});
       return climbing_area
     },
-    all_climbing_areas: async (root, args)=> {
+    all_climbing_areas: async (_, args)=> {
       const climbing_areas = await db.getAllClimbingAreas({_id: args._id});
       return climbing_areas
     },
-    leisure_post: async (root, args)=> {
+    leisure_post: async (_, args)=> {
       const leisure_post = await db.getLeisurePost({_id: args._id});
       return leisure_post
     },
-    sport_post: async (root, args)=> {
+    sport_post: async (_, args)=> {
       const sport_post = await db.getSportPost({_id: args._id});
       return sport_post
+    },
+    all_sport_posts: async ()=> {
+      const all_sport_posts = await db.getAllSportPosts();
+      return all_sport_posts
     }
   },
   Mutation: {
@@ -192,6 +196,7 @@ const resolvers = {
       try {
         const data = {
           user_id: args.post.user_id,
+          username: args.post.username,
           img_url: args.post.img_url,
           route_name: args.post.route_name,
           climbing_area_name: args.post.climbing_area_name,

@@ -23,6 +23,7 @@ const createSportPost = async ({ data }) => {
 
     const {
       user_id,
+      username,
       img_url,
       climbing_area_name,
       route_name,
@@ -31,11 +32,13 @@ const createSportPost = async ({ data }) => {
 
     const sport_post = await sport_posts.insertOne({
       user_id: new ObjectId(user_id),
+      username,
       img_url: mockImg,
       climbing_area_name,
       route_name,
       tags,
-      date_posted: moment().toISOString()
+      date_posted: moment().toISOString(),
+      attempts: 1
     })
 
     //if sport+post was inserted successfully
@@ -106,8 +109,30 @@ const getSportPost = async (data) => {
  client.close();
 }
 
+//get sport_posts for foreignField
+//location based???
+//time based feed???
+//
+//Add pagination
+const getAllSportPosts = async () => {
+ let client;
+ try {
+   client = await MongoClient.connect(url, { useNewUrlParser: true });
+   const db = client.db(dbName);
+   const sport_posts = db.collection('sport_posts');
+
+   const sport_postsArray = await sport_posts.find().limit(10).toArray();
+   const sport_postsWithStrID = sport_postsArray.map(idToString);
+   return sport_postsWithStrID;
+ } catch (err) {
+   //eslint-disable-next-line
+   console.log(err.stack);
+ }
+ client.close();
+}
 
 module.exports = {
   createSportPost,
-  getSportPost
+  getSportPost,
+  getAllSportPosts,
 };
