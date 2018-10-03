@@ -28,7 +28,7 @@ const createRoute = async ({ data }) => {
    if (route.insertedId) {
      const targetClimbingArea =  await climbing_areas.updateOne(
        { "name": climbing_area_name },
-       { $push: { routes: route.insertedId} }
+       { $push: { routes: new ObjectId(route.insertedId)} }
      )
      if (targetClimbingArea.modifiedCount > 0) {
        //FIX -  add spread operator

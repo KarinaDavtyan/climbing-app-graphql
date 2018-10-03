@@ -34,26 +34,50 @@ const createClimbingArea = async ({ data }) => {
 }
 
 const getClimbingArea = async (data) => {
- let client;
- try {
-   client = await MongoClient.connect(url, { useNewUrlParser: true });
-   const db = client.db(dbName);
-   const climbing_areas = db.collection('climbing_areas');
+  let client;
+  try {
+    client = await MongoClient.connect(url, { useNewUrlParser: true });
+    const db = client.db(dbName);
+    const climbing_areas = db.collection('climbing_areas');
 
-   const climbing_area = await climbing_areas.findOne({
-     _id: new ObjectId(data._id)
-   })
-   console.log(climbing_area);
-   if (climbing_area) {
-     climbing_area._id = climbing_area._id.toString();
-     return climbing_area
-   } else {
-     return;
-   }
- } catch (err) {
-   //eslint-disable-next-line
-   console.log(err.stack);
- }
+    const routes = db.collection('routes');
+    let result;
+
+    //option without population
+    // const climbing_area = await climbing_areas.findOne({
+    //   _id: new ObjectId(data._id)
+    // })
+    // if (climbing_area) {
+    //   climbing_area._id = climbing_area._id.toString();
+    //   return climbing_area
+    // } else {
+    //   return;
+    // }
+
+    try {
+      //populate route references
+      const climbing_area = await climbing_areas.aggregate([
+        { $match: { _id: new ObjectId(data._id) } },
+        {
+          $lookup: {
+            from: "routes",
+            localField: "routes",
+            foreignField: "_id",
+            as: "routes"
+          }
+        }
+     ])
+      await climbing_area.forEach((populatedClimbingArea) => {
+        if (populatedClimbingArea)  result = populatedClimbingArea;
+      });
+      return result;
+    } catch (e) {
+      console.log(e);
+    }
+  } catch (err) {
+  //eslint-disable-next-line
+  console.log(err.stack);
+  }
  client.close();
 }
 
