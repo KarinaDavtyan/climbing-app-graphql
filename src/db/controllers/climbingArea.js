@@ -66,11 +66,8 @@ const getClimbingArea = async (data) => {
             as: "routes"
           }
         }
-     ])
-      await climbing_area.forEach((populatedClimbingArea) => {
-        if (populatedClimbingArea)  result = populatedClimbingArea;
-      });
-      return result;
+      ]).toArray();
+      return climbing_area[0];
     } catch (e) {
       console.log(e);
     }

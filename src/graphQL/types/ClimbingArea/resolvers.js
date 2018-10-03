@@ -1,6 +1,8 @@
 const resolvers = {
   ClimbingArea: {
-    routes: async (climbing_area) => climbing_area.routes;
+    routes: async (climbing_area) => {
+      return climbing_area.routes
+    }
   }
 }
 
