@@ -17,6 +17,10 @@ const resolvers = {
       const climbing_area = await db.getClimbingArea({_id: args._id});
       return climbing_area
     },
+    all_climbing_areas: async (root, args)=> {
+      const climbing_areas = await db.getAllClimbingAreas({_id: args._id});
+      return climbing_areas
+    },
     leisure_post: async (root, args)=> {
       const leisure_post = await db.getLeisurePost({_id: args._id});
       return leisure_post
@@ -189,8 +193,11 @@ const resolvers = {
         const data = {
           user_id: args.post.user_id,
           img_url: args.post.img_url,
-          route_id: args.post.route_id
+          route_name: args.post.route_name,
+          climbing_area_name: args.post.climbing_area_name,
+          tags: args.post.tags
         }
+
         const post = await db.createSportPost({ data });
         if (post) {
           const response = {

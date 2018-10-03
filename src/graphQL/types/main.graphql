@@ -10,6 +10,7 @@ type Query {
   user(_id: ID!): User #id username
   route(_id: ID!): Route
   climbing_area(_id: ID, name: String): ClimbingArea #country #distance_from_user*
+  all_climbing_areas: [ClimbingArea]
   sport_posts(_id: ID, user_id: ID, route_id: ID): [SportPost]
   leisure_posts(_id: ID, user_id: ID): [LeisurePost]
   sport_post(_id: ID!): SportPost

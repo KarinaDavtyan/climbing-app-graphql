@@ -2,6 +2,7 @@ type ClimbingArea {
   _id: ID!
   name: String!
   country: String!
+  sport_post: [SportPost]
   # lat: Int!,
   # lon: Int!,
   img_url: String

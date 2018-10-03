@@ -1,22 +1,13 @@
-# import Route from "../Route/type.graphql"
-# import User from "../User/type.graphql"
-
-# interface Post {
-#   _id: ID!
-#   user_id: ID!
-#   img_url: String!
-#   user: User
-#   tags: [String]
-# }
-
 type SportPost  {
   _id: ID!
   user_id: ID!
   img_url: String!
-  route_id: ID!
-  route: Route
-  user: User
+  climbing_area_name: String!
+  route_name: String!
   attempts: Int
+  route: Route
+  route_id: ID
+  user: User
   tags: [String]
 }
 
@@ -42,7 +33,8 @@ input SubmitSportPost {
   user_id: ID!
   "Image url"
   img_url: String!
-  route_id: ID!
+  climbing_area_name: String!
+  route_name: String!
   tags: [String]
 }
 

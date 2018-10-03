@@ -17,7 +17,8 @@ const createClimbingArea = async ({ data }) => {
    const climbing_area = await climbing_areas.insertOne({
      name,
      country,
-     routes: [] //initialize array in order to push route's ID ref on create
+     routes: [], //initialize array in order to push route's ID ref on create
+     sport_posts: [] //initialize array in order to push route's ID ref on create
    })
    if (climbing_area.insertedId) {
      //FIX -  add spread operator
@@ -104,8 +105,26 @@ const deleteClimbingArea = async (_id) => {
  client.close();
 }
 
+const getAllClimbingAreas = async () => {
+ let client;
+ try {
+   client = await MongoClient.connect(url, { useNewUrlParser: true });
+   const db = client.db(dbName);
+   const climbing_areas = db.collection('climbing_areas');
+
+   const climbing_areasArray = await climbing_areas.find().limit(10).toArray();
+   const climbing_areaWithStrID = climbing_areasArray.map(idToString);
+   return climbing_areaWithStrID;
+ } catch (err) {
+   //eslint-disable-next-line
+   console.log(err.stack);
+ }
+ client.close();
+}
+
 module.exports = {
   createClimbingArea,
   getClimbingArea,
-  deleteClimbingArea
+  deleteClimbingArea,
+  getAllClimbingAreas,
 }
