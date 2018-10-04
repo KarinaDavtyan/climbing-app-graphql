@@ -12,7 +12,7 @@ var _db = require('../../db');
 
 var _db2 = _interopRequireDefault(_db);
 
-var _resolvers = require('../types/climbingArea/resolvers.js');
+var _resolvers = require('../types/ClimbingArea/resolvers.js');
 
 var _resolvers2 = _interopRequireDefault(_resolvers);
 
