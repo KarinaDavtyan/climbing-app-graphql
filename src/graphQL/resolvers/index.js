@@ -1,6 +1,6 @@
 import merge from 'lodash.merge';
 import db from '../../db';
-import ClimbingArea from '../types/climbingArea/resolvers.js';
+import ClimbingArea from '../types/ClimbingArea/resolvers.js';
 
 //FIX: Dont repeat code!!!
 const resolvers = {
