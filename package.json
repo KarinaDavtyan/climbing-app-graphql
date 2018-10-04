@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel src -d dist",
     "serve": "node dist/index.js",
-    "start": "babel-node src/index.js",
+    "start": "node dist/index.js",
+    "start2": "babel-node src/index.js",
     "dev": "nodemon --exec yarn start"
   },
   "dependencies": {
