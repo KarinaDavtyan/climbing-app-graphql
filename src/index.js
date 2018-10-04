@@ -7,7 +7,7 @@ import schema from './graphQL/schema.js';
 
 const app = new Koa();
 const server = new ApolloServer({ schema });
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 server.applyMiddleware({ app });
 
