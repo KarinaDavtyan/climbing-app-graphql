@@ -69,7 +69,6 @@ const resolvers = {
           climbing_area_name: args.route.climbing_area_name,
           difficulty: args.route.difficulty,
           length_m: args.route.length_m,
-          tags: args.route.tags,
           style: args.route.style
         }
         const route = await db.createRoute({ data });
@@ -200,7 +199,6 @@ const resolvers = {
           img_url: args.post.img_url,
           route_name: args.post.route_name,
           climbing_area_name: args.post.climbing_area_name,
-          tags: args.post.tags
         }
 
         const post = await db.createSportPost({ data });

@@ -6,7 +6,6 @@ type Route {
   name: String!
   difficulty: String!
   length_m: Int
-  tags: [String]
   style: Style
   img_url: [String]
   climbing_area: ClimbingArea
@@ -30,8 +29,6 @@ input PostRoute {
   difficulty: String
   "Length in metres"
   length_m: Int
-  "Tags related to the route climbing experience or look of the line, e.g. tiny_holds"
-  tags: [String]
   "Route style"
   style: Style
 }

@@ -27,7 +27,6 @@ const createSportPost = async ({ data }) => {
       img_url,
       climbing_area_name,
       route_name,
-      tags
     } = data;
 
     const sport_post = await sport_posts.insertOne({
@@ -36,7 +35,6 @@ const createSportPost = async ({ data }) => {
       img_url: mockImg,
       climbing_area_name,
       route_name,
-      tags,
       date_posted: moment().toISOString(),
       attempts: 1
     })
@@ -55,7 +53,6 @@ const createSportPost = async ({ data }) => {
         name: route_name,
         climbing_area_name,
         img_url,
-        tags,
       })
 
       //and if it was created successfully

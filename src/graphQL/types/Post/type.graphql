@@ -6,10 +6,10 @@ type SportPost  {
   route_name: String!
   username: String!
   attempts: Int
+  date_posted: String
   route: Route
   route_id: ID
   user: User
-  tags: [String]
 }
 
 type LeisurePost {
@@ -19,7 +19,6 @@ type LeisurePost {
   username: String!
   user: User
   likes: Int
-  tags: [String]
 }
 
 input SubmitLeisurePost {
@@ -28,7 +27,6 @@ input SubmitLeisurePost {
   user_id: ID
   "Image url"
   img_url: String!
-  tags: [String]
 }
 
 input SubmitSportPost {
@@ -39,7 +37,6 @@ input SubmitSportPost {
   img_url: String!
   climbing_area_name: String!
   route_name: String!
-  tags: [String]
 }
 
 interface MutationResponse {
