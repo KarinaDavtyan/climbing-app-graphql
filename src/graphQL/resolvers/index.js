@@ -199,6 +199,7 @@ const resolvers = {
           img_url: args.post.img_url,
           route_name: args.post.route_name,
           climbing_area_name: args.post.climbing_area_name,
+          route_difficulty: args.post.route_difficulty,
         }
 
         const post = await db.createSportPost({ data });
