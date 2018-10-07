@@ -19,7 +19,6 @@ const createSportPost = async ({ data }) => {
     const users = db.collection('users');
     const routes = db.collection('routes');
     const climbing_areas = db.collection('climbing_areas');
-    const mockImg = 'https://cdn.shopify.com/s/files/1/0431/5453/files/10979516_1585640008315194_416908833_n_large.jpg?1179517113109345823';
 
     const {
       user_id,
@@ -27,14 +26,16 @@ const createSportPost = async ({ data }) => {
       img_url,
       climbing_area_name,
       route_name,
+      route_difficulty
     } = data;
 
     const sport_post = await sport_posts.insertOne({
       user_id: new ObjectId(user_id),
       username,
-      img_url: mockImg,
+      img_url,
       climbing_area_name,
       route_name,
+      route_difficulty,
       date_posted: moment().toISOString(),
       attempts: 1
     })
@@ -53,6 +54,7 @@ const createSportPost = async ({ data }) => {
         name: route_name,
         climbing_area_name,
         img_url,
+        route_difficulty
       })
 
       //and if it was created successfully

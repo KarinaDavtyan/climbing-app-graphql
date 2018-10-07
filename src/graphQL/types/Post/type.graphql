@@ -4,6 +4,7 @@ type SportPost  {
   img_url: String!
   climbing_area_name: String!
   route_name: String!
+  route_difficulty: String!
   username: String!
   attempts: Int
   date_posted: String
@@ -37,6 +38,7 @@ input SubmitSportPost {
   img_url: String!
   climbing_area_name: String!
   route_name: String!
+  route_difficulty: String!
 }
 
 interface MutationResponse {

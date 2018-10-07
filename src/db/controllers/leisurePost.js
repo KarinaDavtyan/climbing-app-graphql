@@ -6,30 +6,30 @@ const url = process.env.MONGO_LOCAL_DB;
 const dbName = process.env.DB_NAME;
 
 const createLeisurePost = async ({ data }) => {
- let client;
- try {
+  let client;
+  try {
 
-   client = await MongoClient.connect(url, { useNewUrlParser: true });
-   const db = client.db(dbName);
-   const leisure_posts = db.collection('leisure_posts');
-   const users = db.collection('users');
+    client = await MongoClient.connect(url, { useNewUrlParser: true });
+    const db = client.db(dbName);
+    const leisure_posts = db.collection('leisure_posts');
+    const users = db.collection('users');
 
-   const { user_id, img_url } = data;
+    const { user_id, img_url } = data;
 
-   const leisure_post = await leisure_posts.insertOne({
-     user_id: new ObjectId(user_id),
-     img_url
-   })
+    const leisure_post = await leisure_posts.insertOne({
+      user_id: new ObjectId(user_id),
+      img_url: 'https://cdn.shopify.com/s/files/1/0431/5453/files/10979516_1585640008315194_416908833_n_large.jpg?1179517113109345823'
+    })
 
-   if (leisure_post.insertedId) {
-     const targetUser =  await users.updateOne(
-       { _id: new ObjectId(user_id) },
-       { $push: { leisure_posts: leisure_post.insertedId} }
-     )
-     if (targetUser.modifiedCount > 0) {
-       //FIX -  add spread operator
-       const res = Object.assign({_id: leisure_post.insertedId.toString()}, data)
-       return res;
+    if (leisure_post.insertedId) {
+      const targetUser =  await users.updateOne(
+        { _id: new ObjectId(user_id) },
+        { $push: { leisure_posts: leisure_post.insertedId} }
+      )
+      if (targetUser.modifiedCount > 0) {
+        //FIX -  add spread operator
+        const res = Object.assign({_id: leisure_post.insertedId.toString()}, data)
+        return res;
      } else {
        console.log('leisurePost wasnt appended to user creator');
      }
