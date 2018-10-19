@@ -32,6 +32,10 @@ const resolvers = {
     all_sport_posts: async ()=> {
       const all_sport_posts = await db.getAllSportPosts();
       return all_sport_posts
+    },
+    all_leisure_posts: async ()=> {
+      const all_leisure_posts = await db.getAllLeisurePosts();
+      return all_leisure_posts
     }
   },
   Mutation: {
@@ -169,6 +173,7 @@ const resolvers = {
         const data = {
           user_id: args.post.user_id,
           img_url: args.post.img_url,
+          username: args.post.username
         }
         const post = await db.createLeisurePost({ data });
         if (post) {

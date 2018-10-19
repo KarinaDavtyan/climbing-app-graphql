@@ -14,14 +14,13 @@ const createRoute = async ({ data }) => {
    const routes = db.collection('routes');
    const climbing_areas = db.collection('climbing_areas');
 
-   const { name, difficulty, length_m, tags, style, climbing_area_name } = data;
+   const { name, difficulty, length_m, style, climbing_area_name } = data;
 
    const route = await routes.insertOne({
      name,
      climbing_area_name,
      difficulty,
      length_m,
-     tags,
      style
    })
 

@@ -15,6 +15,7 @@ type Query {
   leisure_posts(_id: ID, user_id: ID): [LeisurePost]
   sport_post(_id: ID!): SportPost
   all_sport_posts: [SportPost]
+  all_leisure_posts: [LeisurePost]
   leisure_post(_id: ID!): LeisurePost
 }
 

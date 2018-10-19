@@ -14,11 +14,13 @@ const createLeisurePost = async ({ data }) => {
     const leisure_posts = db.collection('leisure_posts');
     const users = db.collection('users');
 
-    const { user_id, img_url } = data;
+    const { user_id, img_url, username } = data;
 
     const leisure_post = await leisure_posts.insertOne({
       user_id: new ObjectId(user_id),
-      img_url: 'https://cdn.shopify.com/s/files/1/0431/5453/files/10979516_1585640008315194_416908833_n_large.jpg?1179517113109345823'
+      username,
+      img_url,
+      likes: 0
     })
 
     if (leisure_post.insertedId) {
@@ -66,7 +68,30 @@ const getLeisurePost = async (data) => {
  client.close();
 }
 
+//get sport_posts for foreignField
+//location based???
+//time based feed???
+//
+//Add pagination
+const getAllLeisurePosts = async () => {
+ let client;
+ try {
+   client = await MongoClient.connect(url, { useNewUrlParser: true });
+   const db = client.db(dbName);
+   const leisure_posts = db.collection('leisure_posts');
+
+   const leisure_postsArray = await leisure_posts.find().limit(10).toArray();
+   const leisure_postsWithStrID = leisure_postsArray.map(idToString);
+   return leisure_postsWithStrID;
+ } catch (err) {
+   //eslint-disable-next-line
+   console.log(err.stack);
+ }
+ client.close();
+}
+
 module.exports = {
   createLeisurePost,
-  getLeisurePost
+  getLeisurePost,
+  getAllLeisurePosts
 };
