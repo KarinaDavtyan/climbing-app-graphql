@@ -21,7 +21,7 @@ const resolvers = {
       const climbing_areas = await db.getAllClimbingAreas({_id: args._id});
       return climbing_areas
     },
-    leisure_post: async (_, args)=> {
+    leisure_post: async (_, args, context)=> {
       const leisure_post = await db.getLeisurePost({_id: args._id});
       return leisure_post
     },
@@ -33,7 +33,9 @@ const resolvers = {
       const all_sport_posts = await db.getAllSportPosts();
       return all_sport_posts
     },
-    all_leisure_posts: async ()=> {
+    all_leisure_posts: async (_, args, context)=> {
+      console.log(context.user);
+      console.log('context');
       const all_leisure_posts = await db.getAllLeisurePosts();
       return all_leisure_posts
     }
@@ -44,6 +46,7 @@ const resolvers = {
         const data = {
           username: args.user.username,
           email: args.user.email,
+          password: args.user.password
         }
         const user = await db.createUser({ data });
         if (user) {

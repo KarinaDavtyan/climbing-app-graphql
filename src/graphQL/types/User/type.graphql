@@ -5,6 +5,7 @@ type User {
   _id: ID!
   username: String!
   email: String!
+  password: String!
   img_url: String
   name: String
   surname: String
@@ -17,6 +18,7 @@ type User {
 input PostUser {
   username: String!
   email: String!
+  password: String!
 }
 
 interface MutationResponse {
